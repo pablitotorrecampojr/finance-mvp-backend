@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Application\Services\RegisterUserService;
-use App\Application\Services\LoginUserService;
+use App\Domain\Services\RegisterUserService;
+use App\Domain\Services\LoginUserService;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\LoginUserRequest;
 
