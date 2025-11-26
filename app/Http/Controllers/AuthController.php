@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Application\Services\RegisterUserService;
 use App\Application\Services\LoginUserService;
+use App\Http\Requests\RegisterUserRequest;
+use App\Http\Requests\LoginUserRequest;
 
 class AuthController extends Controller
 {
@@ -19,24 +21,17 @@ class AuthController extends Controller
         $this->loginUserService = $loginUserService;
     }
 
-    public function register(Request $request)
+    public function register(RegisterUserRequest $request)
     {
-        $data = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+        $data = $request->validated();
 
         $user = $this->registerUserService->execute($data);
         return response()->json($user, 201);
     }
 
-    public function login(Request $request)
+    public function login(LoginUserRequest $request)
     {
-        $data = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ]);
+        $data = $request->validated();
 
         $token = $this->loginUserService->execute($data['email'], $data['password']);
         if (!$token) {
