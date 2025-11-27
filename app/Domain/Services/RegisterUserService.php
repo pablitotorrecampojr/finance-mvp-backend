@@ -2,7 +2,7 @@
 namespace App\Domain\Services;
 
 use App\Domain\Repositories\UserRepositoryInterface;
-use App\Model\User;
+use App\Models\User;
 
 class RegisterUserService
 {
