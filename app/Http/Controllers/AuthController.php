@@ -26,7 +26,11 @@ class AuthController extends Controller
         $data = $request->validated();
 
         $user = $this->registerUserService->execute($data);
-        return response()->json($user, 201);
+        $token = $user->createToken('auth_token')->plainTextToken;
+        return response()->json([
+            'user'=> $user,
+            'token'=>$token
+        ], 201);
     }
 
     public function login(LoginUserRequest $request)
