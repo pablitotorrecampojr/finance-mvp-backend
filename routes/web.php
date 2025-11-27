@@ -9,8 +9,4 @@ Route::get('/', function () {
 Route::redirect('/', 'admin');
 
 
-Route::get('/sanctum/csrf-cookie', function() {
-    return response()->json([
-        'csrf_token' => csrf_token(),
-    ]);
-});
+Route::get('/sanctum/csrf-cookie', \Laravel\Sanctum\Http\Controllers\CsrfCookieController::class . '@show');
