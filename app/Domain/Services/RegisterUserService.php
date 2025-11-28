@@ -3,6 +3,7 @@ namespace App\Domain\Services;
 
 use App\Domain\Repositories\UserRepositoryInterface;
 use App\Models\User;
+use App\Domain\Enums\AccountStatus;
 
 class RegisterUserService
 {
@@ -15,6 +16,7 @@ class RegisterUserService
 
     public function execute(array $data): User
     {
+        $data['status'] = $data['status'] ?? AccountStatus::PENDING->value;
         return $this->userRepository->create($data);
     }
 }

@@ -7,6 +7,7 @@ use App\Domain\Services\RegisterUserService;
 use App\Domain\Services\LoginUserService;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\LoginUserRequest;
+use App\Http\Resources\UserResource;
 
 class AuthController extends Controller
 {
@@ -28,7 +29,7 @@ class AuthController extends Controller
         $user = $this->registerUserService->execute($data);
         $token = $user->createToken('auth_token')->plainTextToken;
         return response()->json([
-            'user'=> $user,
+            'user'=> new UserResource($user),
             'token'=>$token
         ], 201);
     }
