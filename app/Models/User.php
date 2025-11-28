@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Domain\Enums\AccountStatus;
 
 
 class User extends Authenticatable
@@ -25,7 +26,13 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'status'
     ];
+
+    protected $casts = [
+        'status' => AccountStatus::class,
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
