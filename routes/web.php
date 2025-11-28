@@ -7,4 +7,3 @@ Route::get('/', function () {
 });
 
 Route::redirect('/', 'admin');
-Route::get('/sanctum/csrf-cookie', \Laravel\Sanctum\Http\Controllers\CsrfCookieController::class . '@show');
