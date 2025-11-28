@@ -24,13 +24,10 @@ class User extends Authenticatable
         'username',
         'first_name',
         'last_name',
+        'status',
         'email',
         'password',
         'status'
-    ];
-
-    protected $casts = [
-        'status' => AccountStatus::class,
     ];
 
     /**
@@ -63,4 +60,15 @@ class User extends Authenticatable
     {
         return "{$this->first_name} {$this->last_name}";
     }
+
+    /**
+     * TODO: status accessor
+     */
+    public function getStatusAttribute($value): string
+    {
+        return $value instanceof AccountStatus
+            ? $value->value
+            : $value;
+    }
+
 }
