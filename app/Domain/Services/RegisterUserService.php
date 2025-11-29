@@ -2,12 +2,14 @@
 namespace App\Domain\Services;
 
 use App\Domain\Repositories\UserRepositoryInterface;
+use App\Domain\Repositories\IUserOTPRepository;;
 use App\Models\User;
 use App\Domain\Enums\AccountStatus;
 
 class RegisterUserService
 {
     private UserRepositoryInterface $userRepository;
+    private IUserOTPRepository $IuserOTPRespository;
 
     public function __construct(UserRepositoryInterface $userRepository)
     {
@@ -17,6 +19,9 @@ class RegisterUserService
     public function execute(array $data): User
     {
         $data['status'] = $data['status'] ?? AccountStatus::PENDING->value;
-        return $this->userRepository->create($data);
+        $data['password'] = bcrypt($data['password']);
+        $user = $this->userRepository->create($data);
+        $this->IuserOTPRespository->send($user);
+        return $user;
     }
 }
