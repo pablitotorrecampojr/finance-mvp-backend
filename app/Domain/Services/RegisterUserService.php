@@ -11,9 +11,13 @@ class RegisterUserService
     private UserRepositoryInterface $userRepository;
     private IUserOTPRepository $IuserOTPRespository;
 
-    public function __construct(UserRepositoryInterface $userRepository)
+    public function __construct(
+        UserRepositoryInterface $userRepository,
+        IUserOTPRepository $IuserOTPRespository
+    )
     {
         $this->userRepository = $userRepository;
+        $this->IuserOTPRespository = $IuserOTPRespository;
     }
 
     public function execute(array $data): User

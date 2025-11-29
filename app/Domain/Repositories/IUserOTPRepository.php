@@ -1,7 +1,8 @@
 <?php
-namespace App\Domain\IUserOTPRepository;
-use App\Models\UserOTP;
+namespace App\Domain\Repositories;
+
 use App\Models\User;
+use App\Models\UserOTP;
 
 interface IUserOTPRepository
 {
