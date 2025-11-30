@@ -1,8 +1,8 @@
 <?php
-namespace App\Http\Request;
+namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
-class LoginUserReqquest extends FormRequest
+class LoginUserRequest extends FormRequest
 {
     public function authorize():bool
     {

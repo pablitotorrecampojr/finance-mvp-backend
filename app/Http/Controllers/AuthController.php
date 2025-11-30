@@ -47,7 +47,7 @@ class AuthController extends Controller
         if (!$token) {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
-        return response()->json(['token' => $token]);
+        return $token;
     }
 
     public function verifyOTP(VerifyOTPRequest $request)
