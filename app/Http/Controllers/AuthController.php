@@ -8,6 +8,7 @@ use App\Domain\Services\LoginUserService;
 use App\Domain\Services\UserOTPService;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\LoginUserRequest;
+use App\Http\Requests\VerifyOTPRequest;
 use App\Http\Resources\UserResource;
 
 class AuthController extends Controller

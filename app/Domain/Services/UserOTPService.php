@@ -5,7 +5,7 @@ use App\Domain\Repositories\IUserOTPRepository;;
 use App\Models\User;
 use App\Domain\Enums\AccountStatus;
 
-class RegisterUserService
+class UserOTPService
 {
     private IUserOTPRepository $IuserOTPRespository;
 
