@@ -21,7 +21,7 @@ class EloquentUserOTPRepository implements IUserOTPRepository
         Mail::to($user->email)->send(new OTPMail($otp, $user->first_name));
     }
 
-    public function verify(int $user_id, string $value): bool
+    public function verify(int $userId, string $value): bool
     {
         return true;
     }
