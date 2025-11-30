@@ -18,7 +18,7 @@ class FilamentAdminSeeder extends Seeder
             'username' => 'admin',
             'first_name' => 'Admin',
             'last_name' => 'Filament',
-            'email' => 'filadmin@coinbees.com',
+            'email' => 'filadmin@beecoins.com',
             'password' => Hash::make('admin123')
         ]);
     }

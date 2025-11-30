@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use App\Domain\Repositories\UserRepositoryInterface;
+use App\Domain\Repositories\IUserOTPRepository;
 use App\Infrastructure\Repositories\EloquentUserRepository;
+use App\Infrastructure\Repositories\EloquentUserOTPRepository;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
@@ -17,9 +19,13 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-       $this->app->bind(
+        $this->app->bind(
             UserRepositoryInterface::class, 
-            EloquentUserRepository::class
+            EloquentUserRepository::class,
+        );
+        $this->app->bind(
+            IUserOTPRepository::class, 
+            EloquentUserOTPRepository::class
         );
     }
 

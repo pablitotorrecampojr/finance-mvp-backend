@@ -2,7 +2,7 @@
 
 namespace App\Domain\Repositories;
 
-use App\Model\User;
+use App\Models\User;
 
 interface UserRepositoryInterface
 {
