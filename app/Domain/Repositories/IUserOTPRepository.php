@@ -7,5 +7,5 @@ use App\Models\UserOTP;
 interface IUserOTPRepository
 {
     public function send(User $user): void;
-    public function verify(int $userId, string $value): bool;
+    public function verify(int $userId, string $value);
 }

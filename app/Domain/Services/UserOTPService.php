@@ -16,7 +16,7 @@ class UserOTPService
         $this->IuserOTPRespository = $IuserOTPRespository;
     }
 
-    public function execute(int $userId, string $value): bool
+    public function execute(int $userId, string $value)
     {
         return $this->IuserOTPRespository->verify($userId, $value);
     }
