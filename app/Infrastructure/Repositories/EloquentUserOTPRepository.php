@@ -23,6 +23,13 @@ class EloquentUserOTPRepository implements IUserOTPRepository
 
     public function verify(int $userId, string $value): bool
     {
-        return true;
+        $userOTP = UserOTP::where([
+            'user_id' => $userId,
+            'value' => $value
+        ])->first();
+        if (!$userOTP) {
+            return false;
+        }
+        return Carbon::now()->lessThanOrEqualTo($userOTP->expires_at);
     }
 }
