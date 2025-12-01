@@ -24,7 +24,6 @@ class EloquentUserOTPRepository implements IUserOTPRepository
     public function findByUserId(int $userId):?UserOTP
     {
         return UserOTP::where('user_id', $userId)
-            ->where('expires_at', '>', Carbon::now())
             ->latest()
             ->first();
     }
