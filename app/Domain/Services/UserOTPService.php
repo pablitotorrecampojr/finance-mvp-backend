@@ -4,6 +4,7 @@ namespace App\Domain\Services;
 use App\Domain\Repositories\IUserOTPRepository;;
 use App\Models\User;
 use App\Domain\Enums\AccountStatus;
+use Carbon\Carbon;
 
 class UserOTPService
 {
@@ -42,7 +43,10 @@ class UserOTPService
 
         \DB::transaction(function () use ($userId, $userOTP) {
             $user = User::find($userId);
-            $user->update(['email_verified_at' => Carbon::now()]);
+            $user->update([
+                'email_verified_at' => Carbon::now(),
+                'status' => AccountStatus::ACTIVE,
+            ]);
             $userOTP->delete();
         });
 

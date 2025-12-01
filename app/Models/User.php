@@ -9,7 +9,6 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Domain\Enums\AccountStatus;
 
-
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
@@ -22,7 +21,8 @@ class User extends Authenticatable
         'status',
         'email',
         'password',
-        'status'
+        'status',
+        'email_verified_at'
     ];
 
     protected $hidden = [
