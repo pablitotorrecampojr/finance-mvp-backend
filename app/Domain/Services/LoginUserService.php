@@ -17,6 +17,14 @@ class LoginUserService
     public function execute(string $email, string $password)
     {
         $user = $this->userRepository->findByEmail($email);
+
+        if (is_null($user->email_verified_at)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Please verify email before continuing.'
+            ], 401);
+        }
+
         if (!$user || !Hash::check($password, $user->password)) {
             return response()->json([
                 'success' => false,
