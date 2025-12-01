@@ -6,7 +6,7 @@ use App\Models\User;
 use App\Domain\Enums\AccountStatus;
 use Carbon\Carbon;
 
-class UserOTPService
+class VerifyOTPService
 {
     private IUserOTPRepository $IuserOTPRespository;
 

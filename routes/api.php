@@ -9,6 +9,7 @@ Route::controller(AuthController::class)
         Route::post('/register', 'register');
         Route::post('login', 'login');
         Route::post('/verify-otp', 'verifyOTP')->middleWare('throttle:otp');
+        Route::post('/send-another-otp', 'sendAnotherOTP');
     });
 
 Route::middleware('auth:sanctum')->group(function () {

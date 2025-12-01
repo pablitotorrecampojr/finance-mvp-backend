@@ -5,26 +5,30 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Domain\Services\RegisterUserService;
 use App\Domain\Services\LoginUserService;
-use App\Domain\Services\UserOTPService;
+use App\Domain\Services\VerifyOTPService;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\VerifyOTPRequest;
+use App\Http\Requests\SendAnotherOTPRequest;
 use App\Http\Resources\UserResource;
 
 class AuthController extends Controller
 {
     private RegisterUserService $registerUserService;
     private LoginUserService $loginUserService;
-    private UserOTPService $userOTPService;
+    private VerifyOTPService $verifyOTPService;
+    private SendAnotherOTPRequest $sendAnotherOTPService;
 
     public function __construct(
         RegisterUserService $registerUserService,
         LoginUserService $loginUserService,
-        UserOTPService $userOTPService
+        VerifyOTPService $verifyOTPService,
+        SendAnotherOTPRequest $sendAnotherOTPService
     ) {
         $this->registerUserService = $registerUserService;
         $this->loginUserService = $loginUserService;
-        $this->userOTPService = $userOTPService;
+        $this->verifyOTPService = $verifyOTPService;
+        $this->sendAnotherOTPService = $sendAnotherOTPService;
     }
 
     public function register(RegisterUserRequest $request)
@@ -53,7 +57,14 @@ class AuthController extends Controller
     public function verifyOTP(VerifyOTPRequest $request)
     {
         $data = $request->validated();
-        $response = $this->userOTPService->execute($data['user_id'], $data['value']);
+        $response = $this->verifyOTPService->execute($data['user_id'], $data['value']);
+        return $response;
+    }
+
+    public function sendAnotherOTP(SendAnotherOTPRequest $request) 
+    {
+        $data = $request->validated();
+        $response = $this->sendAnotherOTPService->execute($data['user_id']);
         return $response;
     }
 }
