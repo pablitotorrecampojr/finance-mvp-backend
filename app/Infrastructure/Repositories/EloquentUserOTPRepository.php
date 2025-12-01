@@ -21,35 +21,11 @@ class EloquentUserOTPRepository implements IUserOTPRepository
         Mail::to($user->email)->send(new OTPMail($otp, $user->first_name));
     }
 
-    public function verify(int $userId, string $value)
+    public function findByUserId(int $userId):?UserOTP
     {
-        $userOTP = UserOTP::where('user_id', $userId)
-                        ->first();
-
-        if (!$userOTP) {
-            return response()->json([
-                'success' => false,
-                'message' => 'OTP not found!',
-            ]);
-        }
-
-        if (Carbon::now()->greaterThan($userOTP->expires_at)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'OTP has expired',
-            ]);
-        }
-
-        if ($userOTP->value !== $value) {
-             return response()->json([
-                'success' => false,
-                'message' => 'OTP doesn\'t match!',
-            ]);
-        }
-
-        return response()->json([
-            'success' => true,
-            'message' => 'OTP verified successfully',
-        ]);
+        return UserOTP::where('user_id', $userId)
+            ->where('expires_at', '>', Carbon::now())
+            ->latest()
+            ->first();
     }
 }
