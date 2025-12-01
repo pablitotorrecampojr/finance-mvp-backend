@@ -9,7 +9,7 @@ use Carbon\Carbon;
 
 class EloquentUserOTPRepository implements IUserOTPRepository
 {
-    public function send(User $user): void
+    public function send(User $user): ?UserOTP
     {
         try {
             $otp = rand(100000, 999999);
@@ -20,10 +20,14 @@ class EloquentUserOTPRepository implements IUserOTPRepository
                     'value' => $otp,
                     'expires_at' => $expires_at,
                 ]);
-                Mail::to($user->email)->send(new OTPMail($otp, $user->first_name));
+                Mail::to($user->email)->queue(new OTPMail($otp, $user->first_name));
             });
+            return UserOTP::where('user_id', $user->id)
+                ->latest()
+                ->first();
         } catch (\Throwable $th) {
             \Log::error('OTP send failed: '.$th->getMessage());
+            return null;
         }
     }
 
