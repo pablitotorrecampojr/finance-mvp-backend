@@ -43,11 +43,11 @@ class AuthController extends Controller
     {
         $data = $request->validated();
 
-        $token = $this->loginUserService->execute($data['email'], $data['password']);
-        if (!$token) {
+        $response = $this->loginUserService->execute($data['email'], $data['password']);
+        if (!$response) {
             return response()->json(['message' => 'Invalid credentials'], 401);
         }
-        return $token;
+        return $response;
     }
 
     public function verifyOTP(VerifyOTPRequest $request)
