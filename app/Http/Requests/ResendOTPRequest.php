@@ -2,7 +2,7 @@
 namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
-class SendAnotherOTPRequest extends FormRequest
+class ResendOTPRequest extends FormRequest
 {
     public function authorize():bool
     {
