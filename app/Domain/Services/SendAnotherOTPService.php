@@ -19,6 +19,17 @@ class SendAnotherOTPService
 
     public function execute(array $data)
     {
-        $this->IuserOTPRespository->send($user);
+        $response = $this->IuserOTPRespository->send($user);
+        if ($response) {
+            return response()->json([
+                'success' => true,
+                'message' => 'OTP sent!'
+            ]);
+        } else {
+            return response()->json([
+                'success'=> false,
+                'message'=> 'Failed to send OTP!'
+            ]);
+        }
     }
 }
