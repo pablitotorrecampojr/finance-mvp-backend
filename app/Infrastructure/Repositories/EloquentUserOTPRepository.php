@@ -14,17 +14,16 @@ class EloquentUserOTPRepository implements IUserOTPRepository
         try {
             $otp = rand(100000, 999999);
             $expires_at = Carbon::now()->addMinutes(5);
-            \DB::transaction(function () use ($user, $otp, $expires_at) {
-                UserOTP::create([
+            $userOTP = \DB::transaction(function () use ($user, $otp, $expires_at) {
+                UserOTP::where('user_id', $user->id)->delete();
+                return UserOTP::create([
                     'user_id' => $user->id,
                     'value' => $otp,
                     'expires_at' => $expires_at,
                 ]);
-                Mail::to($user->email)->queue(new OTPMail($otp, $user->first_name));
             });
-            return UserOTP::where('user_id', $user->id)
-                ->latest()
-                ->first();
+            Mail::to($user->email)->queue(new OTPMail($otp, $user->first_name));
+            return $userOTP;
         } catch (\Throwable $th) {
             \Log::error('OTP send failed: '.$th->getMessage());
             return null;
