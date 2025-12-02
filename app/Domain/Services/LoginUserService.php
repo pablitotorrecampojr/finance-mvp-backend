@@ -21,13 +21,21 @@ class LoginUserService
             return response()->json([
                 'success' => false,
                 'message' => 'Invalid credentials',
+                'data' => [
+                    'email' => 'Email not found!',
+                    'password' => 'Invalid password!'
+                ]
             ], 401);
         }
 
         if (is_null($user->email_verified_at)) {
             return response()->json([
                 'success' => false,
-                'message' => 'Please verify email before continuing.'
+                'message' => 'Please verify email before continuing.',
+                'data' => [
+                    'email' => 'Email not verified!',
+                    'passowrd' => 'Invalid password!'
+                ]
             ], 401);
         }
         $token = $user->createToken($email.'_token')->plainTextToken;
