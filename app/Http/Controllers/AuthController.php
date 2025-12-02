@@ -65,7 +65,7 @@ class AuthController extends Controller
     public function resendOTP(ResendOTPRequest $request) 
     {
         $data = $request->validated();
-        $response = $this->resendOTPService->execute($data['user_id']);
+        $response = $this->resendOTPService->execute($data['id']);
         return $response;
     }
 }
