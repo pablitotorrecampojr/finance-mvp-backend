@@ -17,14 +17,6 @@ class LoginUserService
     public function execute(string $email, string $password)
     {
         $user = $this->userRepository->findByEmail($email);
-
-        if (is_null($user->email_verified_at)) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Please verify email before continuing.'
-            ], 401);
-        }
-
         if (!$user || !Hash::check($password, $user->password)) {
             return response()->json([
                 'success' => false,
@@ -32,14 +24,20 @@ class LoginUserService
             ], 401);
         }
 
+        if (is_null($user->email_verified_at)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Please verify email before continuing.'
+            ], 401);
+        }
         $token = $user->createToken($email.'_token')->plainTextToken;
 
         return response()->json([
             'success' => true,
             'message' => 'Login successful',
+            'token' => $token,
             'data'    => [
                 'user'  => new UserResource($user),
-                'token' => $token,
             ],
         ]);
     }
