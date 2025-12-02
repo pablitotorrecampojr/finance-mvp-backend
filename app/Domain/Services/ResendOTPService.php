@@ -17,8 +17,9 @@ class ResendOTPService
         $this->IuserOTPRespository = $IuserOTPRespository;
     }
 
-    public function execute(array $data)
+    public function execute(int $userId)
     {
+        $user = User::where('id', $userId)->first();
         $response = $this->IuserOTPRespository->send($user);
         if ($response) {
             return response()->json([
