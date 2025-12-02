@@ -22,7 +22,7 @@ class EloquentUserOTPRepository implements IUserOTPRepository
                     'expires_at' => $expires_at,
                 ]);
             });
-            Mail::to($user->email)->queue(new OTPMail($otp, $user->first_name));
+            Mail::to($user->email)->send(new OTPMail($otp, $user->first_name));
             return $userOTP;
         } catch (\Throwable $th) {
             \Log::error('OTP send failed: '.$th->getMessage());
