@@ -6,6 +6,6 @@ use App\Models\UserOTP;
 
 interface IUserOTPRepository
 {
-    public function send(User $user): void;
+    public function send(User $user): ?UserOTP;
     public function findByUserId(int $userId);
 }
