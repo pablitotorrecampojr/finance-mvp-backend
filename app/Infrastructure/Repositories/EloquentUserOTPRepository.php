@@ -13,7 +13,7 @@ class EloquentUserOTPRepository implements IUserOTPRepository
     {
         try {
             $otp = rand(100000, 999999);
-            $expires_at = Carbon::now()->addMinutes(5);
+            $expires_at = Carbon::now()->addMinutes(1);
             $userOTP = \DB::transaction(function () use ($user, $otp, $expires_at) {
                 UserOTP::where('user_id', $user->id)->delete();
                 return UserOTP::create([

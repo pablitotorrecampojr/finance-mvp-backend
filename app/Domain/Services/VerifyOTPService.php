@@ -30,7 +30,7 @@ class VerifyOTPService
         if(Carbon::now()->greaterThan($userOTP->expires_at)) {
             return response()->json([
                 'success' => false,
-                'message' => 'OTP expired.',
+                'message' => 'OTP has expired.',
             ], 400);
         }
 

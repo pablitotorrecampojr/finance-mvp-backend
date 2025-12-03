@@ -8,7 +8,7 @@ Route::controller(AuthController::class)
     ->group(function() {
         Route::post('/register', 'register');
         Route::post('login', 'login');
-        Route::post('/verify-otp', 'verifyOTP')->middleWare('throttle:otp');
+        Route::post('/verify-otp', 'verifyOTP');
         Route::post('/resend-otp', 'resendOTP');
     });
 
