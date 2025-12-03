@@ -4,6 +4,7 @@ namespace App\Domain\Services;
 use App\Domain\Repositories\IUserOTPRepository;;
 use App\Models\User;
 use App\Domain\Enums\AccountStatus;
+use App\Domain\Enums\OTPResponseCodes;
 use Carbon\Carbon;
 
 class VerifyOTPService
@@ -23,6 +24,7 @@ class VerifyOTPService
         if(!$userOTP) {
             return response()->json([
                 'success' => false,
+                'code' => OTPResponseCodes::NOTFOUND,
                 'message' => 'OTP not found.',
             ], 404);
         }
@@ -30,6 +32,7 @@ class VerifyOTPService
         if(Carbon::now()->greaterThan($userOTP->expires_at)) {
             return response()->json([
                 'success' => false,
+                'code' => OTPResponseCodes::EXPIRED,
                 'message' => 'OTP has expired.',
             ], 400);
         }
@@ -37,6 +40,7 @@ class VerifyOTPService
         if($userOTP->value !== $value) {
             return response()->json([
                 'success' => false,
+                'code' => OTPResponseCodes::MISMATCH,
                 'message' => 'OTP mismatch.',
             ], 400);
         }
@@ -52,6 +56,7 @@ class VerifyOTPService
 
         return response()->json([
             'success' => true,
+            'code' => OTPResponseCodes::SUCCESS,
             'message' => 'OTP verified successfully.',
         ]);
     }
