@@ -8,4 +8,6 @@ enum OTPResponseCodes: string
     case EXPIRED = 'OTP_HAS_EXPIRED';
     case MISMATCH = 'OTP_MISMATCH';
     case SUCCESS = 'OTP_VERIFIED';
+    case FAILED = 'OTP_PROCESS_FAILED';
+    case SENT = 'OTP_SENT';
 }

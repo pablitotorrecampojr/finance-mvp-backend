@@ -4,6 +4,7 @@ namespace App\Domain\Services;
 use App\Domain\Repositories\IUserOTPRepository;;
 use App\Models\User;
 use App\Domain\Enums\AccountStatus;
+use App\Domain\Enums\OTPResponseCodes;
 use Carbon\Carbon;
 
 class ResendOTPService
@@ -24,12 +25,14 @@ class ResendOTPService
         if ($response) {
             return response()->json([
                 'success' => true,
-                'message' => 'OTP sent!'
+                'code' => OTPResponseCodes::SENT,
+                'message' => 'One time password was resent!'
             ]);
         } else {
             return response()->json([
                 'success'=> false,
-                'message'=> 'Failed to send OTP!'
+                'code' => OTPResponseCodes::FAILED,
+                'message'=> 'Failed to send one time password!'
             ]);
         }
     }
