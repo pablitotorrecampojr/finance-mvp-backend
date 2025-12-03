@@ -3,6 +3,7 @@ namespace App\Domain\Services;
 
 use App\Domain\Repositories\UserRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\UserResource;
 
 class LoginUserService
 {
@@ -13,14 +14,39 @@ class LoginUserService
         $this->userRepository = $userRepository;
     }
 
-    public function execute(string $email, string $password): ?string
+    public function execute(string $email, string $password)
     {
         $user = $this->userRepository->findByEmail($email);
         if (!$user || !Hash::check($password, $user->password)) {
-            return null;
+            return response()->json([
+                'success' => false,
+                'message' => 'Invalid credentials',
+                'data' => [
+                    'email' => 'Email not found!',
+                    'password' => 'Invalid password!'
+                ]
+            ], 401);
         }
 
-        // Generate a simple token (e.g., using Laravel Sanctum or JWT)
-        return $user->createToken('auth_token')->plainTextToken;
+        if (is_null($user->email_verified_at)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Please verify email before continuing.',
+                'data' => [
+                    'email' => 'Email not verified!',
+                    'passowrd' => 'Invalid password!'
+                ]
+            ], 401);
+        }
+        $token = $user->createToken($email.'_token')->plainTextToken;
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Login successful',
+            'token' => $token,
+            'data'    => [
+                'user'  => new UserResource($user),
+            ],
+        ]);
     }
 }

@@ -2,10 +2,16 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::get('/sanctum/csrf-cookie', \Laravel\Sanctum\Http\Controllers\CsrfCookieController::class . '@show');
 
-// If using token-protected routes
+Route::controller(AuthController::class)
+    ->group(function() {
+        Route::post('/register', 'register');
+        Route::post('login', 'login');
+        Route::post('/verify-otp', 'verifyOTP');
+        Route::post('/resend-otp', 'resendOTP');
+    });
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile', [AuthController::class, 'profile']);
     Route::post('/logout', [AuthController::class, 'logout']);
