@@ -5,6 +5,8 @@ use App\Domain\Repositories\UserRepositoryInterface;
 use App\Domain\Repositories\IPasswordResetTokenRepository;
 use App\Domain\Enums\ForgotPasswordCodes;
 use App\Models\PasswordResetToken;
+use App\Mail\ForgotPasswordMail;
+use Illuminate\Support\Facades\Mail;
 
 class ForgotPasswordService
 {
@@ -33,7 +35,7 @@ class ForgotPasswordService
 
         $token = \Str::random(64);
         $passwordResetToken = $this->passwordResetTokenRepository->create($user->email, $token);
-        if (!passwordResetToken) {
+        if (!$passwordResetToken) {
             return response()->json([
                 'success'=> false,
                 'code' => ForgotPasswordCodes::FAILED,
@@ -41,14 +43,15 @@ class ForgotPasswordService
             ]);
         }
 
-        
+        $domain = config('sanctum.stateful')[0];
+        $resetLink = "http://{$domain}/reset-password?token={$token}&email={$user->email}";
+
+        Mail::to($user->email)->send(new ForgotPasswordMail($resetLink, $user->first_name));
+
         return response()->json([
             'success' => true,
-            'message' => 'Login successful',
-            'token' => $token,
-            'data'    => [
-                'user'  => new UserResource($user),
-            ],
+            'code' => ForgotPasswordCodes::SUCCESS,
+            'message' => "Reset password link was sent to provide email!"
         ]);
     }
 }

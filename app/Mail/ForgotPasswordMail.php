@@ -12,17 +12,17 @@ use Illuminate\Queue\SerializesModels;
 class ForgotPasswordMail extends Mailable
 {
     use Queueable, SerializesModels;
-    public $changePasswordLink;
+    public $resetLink;
     public $firstName;
     /**
      * Create a new message instance.
      */
     public function __construct(
-        $changePasswordLink,
+        $resetLink,
         $firstName
     )
     {
-        $this->changePasswordLink = $changePasswordLink;
+        $this->resetLink = $resetLink;
         $this->firstName = $firstName;
     }
 
@@ -44,7 +44,7 @@ class ForgotPasswordMail extends Mailable
         return new Content(
             view: 'email.Forgot-Password',
             with: [
-                'changePasswordLink' => $this->changePasswordLink,
+                'resetLink' => $this->resetLink,
                 'first_name' => $this->firstName
             ]
         );
