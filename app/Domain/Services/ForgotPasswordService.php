@@ -33,6 +33,14 @@ class ForgotPasswordService
 
         $token = \Str::random(64);
         $passwordResetToken = $this->passwordResetTokenRepository->create($user->email, $token);
+        if (!passwordResetToken) {
+            return response()->json([
+                'success'=> false,
+                'code' => ForgotPasswordCodes::FAILED,
+                'message' => "Failed to create send to email."
+            ]);
+        }
+
         
         return response()->json([
             'success' => true,
