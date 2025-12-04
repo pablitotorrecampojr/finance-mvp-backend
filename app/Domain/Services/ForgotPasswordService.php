@@ -44,7 +44,7 @@ class ForgotPasswordService
         }
 
         $domain = config('sanctum.stateful')[0];
-        $resetLink = "http://{$domain}/reset-password?token={$token}&email={$user->email}";
+        $resetLink = "http://{$domain}/reset-password?token={$token}";
 
         Mail::to($user->email)->send(new ForgotPasswordMail($resetLink, $user->first_name));
 
