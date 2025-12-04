@@ -7,6 +7,7 @@ use App\Domain\Services\RegisterUserService;
 use App\Domain\Services\LoginUserService;
 use App\Domain\Services\VerifyOTPService;
 use App\Domain\Services\ResendOTPService;
+use App\Domain\Services\ForgotPasswordService;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\VerifyOTPRequest;
@@ -27,7 +28,7 @@ class AuthController extends Controller
         LoginUserService $loginUserService,
         VerifyOTPService $verifyOTPService,
         ResendOTPService $resendOTPService,
-        ForgotPasswodService $forgotPasswordService
+        ForgotPasswordService $forgotPasswordService
     ) {
         $this->registerUserService = $registerUserService;
         $this->loginUserService = $loginUserService;
@@ -76,7 +77,7 @@ class AuthController extends Controller
     public function forgotPassword(ForgotPasswordRequest $request)
     {
         $data = $request->validated();
-        $response = $this->forgotPassword->execute($data['email']);
+        $response = $this->forgotPasswordService->execute($data['email']);
         return $resend;
     }
 }

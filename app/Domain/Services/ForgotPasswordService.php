@@ -1,21 +1,23 @@
 <?php
 namespace App\Domain\Services;
 
-use App\Domain\Repositories\IForgotPasswordRespository;
+use App\Domain\Repositories\UserRepositoryInterface;
 
 class ForgotPasswordService
 {
-    private IForgotPasswordRespository $forgotPasswordRepository;
+    private UserRepositoryInterface $userRepository;
 
-    public function __construct(IForgotPasswordRespository $forgotPasswordRepository)
+    public function __construct(UserRepositoryInterface $userRepository)
     {
-        $this->forgotPasswordRepository = $forgotPasswordRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function execute(string $email)
     {
-        $user = $this->forgotPasswordRepository->send($email);
-        
+        $user = $this->userRepository->findByEmail($email);
+        if (!$user) {
+            
+        }
         return response()->json([
             'success' => true,
             'message' => 'Login successful',
