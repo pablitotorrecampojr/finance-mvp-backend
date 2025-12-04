@@ -2,6 +2,7 @@
 namespace App\Domain\Services;
 
 use App\Domain\Repositories\UserRepositoryInterface;
+use App\Domain\Enums\ForgotPasswordCodes;
 
 class ForgotPasswordService
 {
@@ -16,7 +17,11 @@ class ForgotPasswordService
     {
         $user = $this->userRepository->findByEmail($email);
         if (!$user) {
-            
+            return response()->json([
+                'success'=> false,
+                'code' => ForgotPasswordCodes::MISMATCH,
+                'message' => "No account with that email found!"
+            ]);
         }
         return response()->json([
             'success' => true,

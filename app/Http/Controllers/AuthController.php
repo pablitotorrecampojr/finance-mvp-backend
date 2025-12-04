@@ -78,6 +78,6 @@ class AuthController extends Controller
     {
         $data = $request->validated();
         $response = $this->forgotPasswordService->execute($data['email']);
-        return $resend;
+        return $response;
     }
 }
