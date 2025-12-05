@@ -33,13 +33,13 @@ class ResetPasswordService
             ]);
         }
 
-        if (Carbon::now()->greaterThan($passwordResetToken->expired_at)) {
-            return response()->json([
-                'success' => false,
-                'code' => ForgotPasswordCodes::EXPIRED,
-                'message' => 'Reset token has expired!'
-            ]);
-        }
+        // if (Carbon::now()->greaterThan($passwordResetToken->expired_at)) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'code' => ForgotPasswordCodes::EXPIRED,
+        //         'message' => 'Reset token has expired!'
+        //     ]);
+        // }
 
         $resetPassword = $this->userRepository->resetPassword($userId, $password);
 
