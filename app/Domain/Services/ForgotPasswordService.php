@@ -51,7 +51,7 @@ class ForgotPasswordService
         return response()->json([
             'success' => true,
             'code' => ForgotPasswordCodes::SUCCESS,
-            'message' => "Reset password link was sent to provide email!"
+            'message' => "Reset password link was sent to provided email!"
         ]);
     }
 }

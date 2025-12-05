@@ -9,6 +9,7 @@ class PasswordResetToken extends Model
     protected $table = 'password_reset_tokens';
     public $timestamps = false;
     public $fillable = [
+        'user_id',
         'email',
         'token',
         'expired_at',
