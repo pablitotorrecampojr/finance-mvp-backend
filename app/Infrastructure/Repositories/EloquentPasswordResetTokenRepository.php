@@ -4,7 +4,7 @@ use App\Models\PasswordResetToken;
 use App\Domain\Repositories\IPasswordResetTokenRepository;
 use Carbon\Carbon;
 
-class elPasswordResetTokenRepository implements IPasswordResetTokenRepository
+class EloquentPasswordResetTokenRepository implements IPasswordResetTokenRepository
 {
     public function create(string $email, string $token): ?PasswordResetToken
     {
