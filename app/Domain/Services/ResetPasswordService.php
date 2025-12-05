@@ -7,7 +7,7 @@ use App\Domain\Enums\ForgotPasswordCodes;
 use App\Models\PasswordResetToken;
 use Carbon\Carbon;
 
-class ResetPasswordServ
+class ResetPasswordService
 {
     private UserRepositoryInterface $userRepository;
     private IPasswordResetTokenRepository $passwordResetTokenRepository;

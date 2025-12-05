@@ -8,6 +8,7 @@ use App\Domain\Services\LoginUserService;
 use App\Domain\Services\VerifyOTPService;
 use App\Domain\Services\ResendOTPService;
 use App\Domain\Services\ForgotPasswordService;
+use App\Domain\Services\ResetPasswordService;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\VerifyOTPRequest;
@@ -23,19 +24,22 @@ class AuthController extends Controller
     private VerifyOTPService $verifyOTPService;
     private ResendOTPService $resendOTPService;
     private ForgotPasswordService $forgotPasswordService;
+    private ResetPasswordService $resetPasswordService;
 
     public function __construct(
         RegisterUserService $registerUserService,
         LoginUserService $loginUserService,
         VerifyOTPService $verifyOTPService,
         ResendOTPService $resendOTPService,
-        ForgotPasswordService $forgotPasswordService
+        ForgotPasswordService $forgotPasswordService,
+        ResetPasswordService $resetPasswordService
     ) {
         $this->registerUserService = $registerUserService;
         $this->loginUserService = $loginUserService;
         $this->verifyOTPService = $verifyOTPService;
         $this->resendOTPService = $resendOTPService;
         $this->forgotPasswordService = $forgotPasswordService;
+        $this->resetPasswordService = $resetPasswordService;
     }
 
     public function register(RegisterUserRequest $request)
@@ -85,7 +89,7 @@ class AuthController extends Controller
     public function resetPassword(ResetPasswordRequest $request)
     {
         $data = $request->validated();
-        $response = $this->resetPasswordService->execute($data['email']);
+        $response = $this->resetPasswordService->execute($data['token'], $data['password']);
         return $response;
     }
 }
