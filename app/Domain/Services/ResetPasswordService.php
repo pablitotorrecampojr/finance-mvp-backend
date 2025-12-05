@@ -24,11 +24,11 @@ class ResetPasswordService
     public function execute(string $token, string $password)
     {
         $passwordResetToken = $this->passwordResetTokenRepository->findByToken($token);
-        
+
         if (!$passwordResetToken) {
             return response()->json([
                 'success' => false,
-                'code' => ForgotPasswordCodes::NOTFOUND,
+                'code' => ForgotPasswordCodes::INVALID,
                 'message' => 'Reset token cannot be found!' 
             ]);
         }
@@ -42,7 +42,7 @@ class ResetPasswordService
         // }
 
         $resetPassword = $this->userRepository->resetPassword($passwordResetToken->user_id, $password);
-
+        
         if (!$resetPassword) {
             return response()->json([
                 'success' => false,
@@ -50,6 +50,8 @@ class ResetPasswordService
                 'message' => 'Failed to reset user password!'
             ]);
         }
+
+        $passwordResetToken->delete();
 
         return response()->json([
             'success' => true,
