@@ -16,7 +16,7 @@ class EloquentUserRepository implements UserRepositoryInterface
         return User::where('email', $email)->first();
     }
 
-    public function resetPassword(int $userId, string $password): ?User
+    public function resetPassword(int $userId, string $password): ?int
     {
         return User::where('id', $userId)->update([
             'password' => \Hash::make($password),

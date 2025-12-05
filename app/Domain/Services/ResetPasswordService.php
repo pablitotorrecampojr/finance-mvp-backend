@@ -24,7 +24,7 @@ class ResetPasswordService
     public function execute(string $token, string $password)
     {
         $passwordResetToken = $this->passwordResetTokenRepository->findByToken($token);
-
+        
         if (!$passwordResetToken) {
             return response()->json([
                 'success' => false,
@@ -41,7 +41,7 @@ class ResetPasswordService
         //     ]);
         // }
 
-        $resetPassword = $this->userRepository->resetPassword($userId, $password);
+        $resetPassword = $this->userRepository->resetPassword($passwordResetToken->user_id, $password);
 
         if (!$resetPassword) {
             return response()->json([
