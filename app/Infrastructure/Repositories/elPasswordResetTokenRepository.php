@@ -15,4 +15,11 @@ class elPasswordResetTokenRepository implements IPasswordResetTokenRepository
             'created_at' => Carbon::now()
         ]);
     }
+
+    public function findByToken(string $token): ?PasswordResetToken
+    {
+        return PasswordResetToken::where([
+            'token' => $token
+        ])->first();
+    }
 }

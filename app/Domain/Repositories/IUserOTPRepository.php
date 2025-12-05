@@ -8,4 +8,5 @@ interface IUserOTPRepository
 {
     public function send(User $user): ?UserOTP;
     public function findByUserId(int $userId);
+    public function resetPassword(int $userId, string $password):?User;
 }

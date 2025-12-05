@@ -15,4 +15,11 @@ class EloquentUserRepository implements UserRepositoryInterface
     {
         return User::where('email', $email)->first();
     }
+
+    public function resetPassword(int $userId, string $password): ?User
+    {
+        return User::where('id', $userId)->update([
+            'password' => \Hash::make($password),
+        ]);
+    }
 }

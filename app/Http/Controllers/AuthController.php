@@ -13,6 +13,7 @@ use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\VerifyOTPRequest;
 use App\Http\Requests\ResendOTPRequest;
 use App\Http\Requests\ForgotPasswordRequest;
+use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Resources\UserResource;
 
 class AuthController extends Controller
@@ -78,6 +79,13 @@ class AuthController extends Controller
     {
         $data = $request->validated();
         $response = $this->forgotPasswordService->execute($data['email']);
+        return $response;
+    }
+
+    public function resetPassword(ResetPasswordRequest $request)
+    {
+        $data = $request->validated();
+        $response = $this->resetPasswordService->execute($data['email']);
         return $response;
     }
 }
