@@ -26,8 +26,16 @@ return new class extends Migration
      */
     public function down(): void
     {
-        $table->dropColumn('id');
-        $table->string('email')->unique()->change();
+        Schema::table('password_reset_tokens', function (Blueprint $table) {
+            if (Schema::hasColumn('password_reset_tokens', 'id')) {
+                $table->dropColumn('id');
+            }
+        });
+
+        Schema::table('password_reset_tokens', function (Blueprint $table) {
+            $table->string('email')->unique()->change();
+            $table->primary('email');
+        });
     }
 };
 
