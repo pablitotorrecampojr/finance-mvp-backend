@@ -7,10 +7,14 @@ use App\Domain\Services\RegisterUserService;
 use App\Domain\Services\LoginUserService;
 use App\Domain\Services\VerifyOTPService;
 use App\Domain\Services\ResendOTPService;
+use App\Domain\Services\ForgotPasswordService;
+use App\Domain\Services\ResetPasswordService;
 use App\Http\Requests\RegisterUserRequest;
 use App\Http\Requests\LoginUserRequest;
 use App\Http\Requests\VerifyOTPRequest;
 use App\Http\Requests\ResendOTPRequest;
+use App\Http\Requests\ForgotPasswordRequest;
+use App\Http\Requests\ResetPasswordRequest;
 use App\Http\Resources\UserResource;
 
 class AuthController extends Controller
@@ -19,17 +23,23 @@ class AuthController extends Controller
     private LoginUserService $loginUserService;
     private VerifyOTPService $verifyOTPService;
     private ResendOTPService $resendOTPService;
+    private ForgotPasswordService $forgotPasswordService;
+    private ResetPasswordService $resetPasswordService;
 
     public function __construct(
         RegisterUserService $registerUserService,
         LoginUserService $loginUserService,
         VerifyOTPService $verifyOTPService,
-        ResendOTPService $resendOTPService
+        ResendOTPService $resendOTPService,
+        ForgotPasswordService $forgotPasswordService,
+        ResetPasswordService $resetPasswordService
     ) {
         $this->registerUserService = $registerUserService;
         $this->loginUserService = $loginUserService;
         $this->verifyOTPService = $verifyOTPService;
         $this->resendOTPService = $resendOTPService;
+        $this->forgotPasswordService = $forgotPasswordService;
+        $this->resetPasswordService = $resetPasswordService;
     }
 
     public function register(RegisterUserRequest $request)
@@ -66,6 +76,20 @@ class AuthController extends Controller
     {
         $data = $request->validated();
         $response = $this->resendOTPService->execute($data['id']);
+        return $response;
+    }
+
+    public function forgotPassword(ForgotPasswordRequest $request)
+    {
+        $data = $request->validated();
+        $response = $this->forgotPasswordService->execute($data['email']);
+        return $response;
+    }
+
+    public function resetPassword(ResetPasswordRequest $request)
+    {
+        $data = $request->validated();
+        $response = $this->resetPasswordService->execute($data['token'], $data['password']);
         return $response;
     }
 }

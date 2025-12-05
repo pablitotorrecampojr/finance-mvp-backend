@@ -5,8 +5,10 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use App\Domain\Repositories\UserRepositoryInterface;
 use App\Domain\Repositories\IUserOTPRepository;
+use App\Domain\Repositories\IPasswordResetTokenRepository;
 use App\Infrastructure\Repositories\EloquentUserRepository;
 use App\Infrastructure\Repositories\EloquentUserOTPRepository;
+use App\Infrastructure\Repositories\EloquentPasswordResetTokenRepository;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +28,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             IUserOTPRepository::class, 
             EloquentUserOTPRepository::class
+        );
+        $this->app->bind(
+            IPasswordResetTokenRepository::class,
+            EloquentPasswordResetTokenRepository::class
         );
     }
 
