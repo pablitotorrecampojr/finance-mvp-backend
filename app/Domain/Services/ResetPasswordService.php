@@ -28,8 +28,8 @@ class ResetPasswordService
         if (!$passwordResetToken) {
             return response()->json([
                 'success' => false,
-                'code' => ForgotPasswordCodes::INVALID,
-                'message' => 'Reset token cannot be found!' 
+                'code' => ForgotPasswordCodes::EXPIRED,
+                'message' => 'Reset token has expired!' 
             ]);
         }
 
