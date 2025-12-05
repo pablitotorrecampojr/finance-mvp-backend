@@ -29,7 +29,10 @@ class ForgotPasswordService
             return response()->json([
                 'success'=> false,
                 'code' => ForgotPasswordCodes::MISMATCH,
-                'message' => "No account with that email found!"
+                'message' => "No account with that email found!",
+                'data' => [
+                    'email' => 'Cannot find this email!'
+                ]
             ]);
         }
 
