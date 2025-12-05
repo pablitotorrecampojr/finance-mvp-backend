@@ -6,9 +6,10 @@ use Carbon\Carbon;
 
 class EloquentPasswordResetTokenRepository implements IPasswordResetTokenRepository
 {
-    public function create(string $email, string $token): ?PasswordResetToken
+    public function create(int $userId, string $email, string $token): ?PasswordResetToken
     {
         return PasswordResetToken::create([
+            'user_id' => $userId,
             'email' => $email,
             'token' => $token,
             'expired_at' => Carbon::now()->addMinutes(10),

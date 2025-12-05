@@ -34,7 +34,7 @@ class ForgotPasswordService
         }
 
         $token = \Str::random(64);
-        $passwordResetToken = $this->passwordResetTokenRepository->create($user->email, $token);
+        $passwordResetToken = $this->passwordResetTokenRepository->create($user->id, $user->email, $token);
         if (!$passwordResetToken) {
             return response()->json([
                 'success'=> false,

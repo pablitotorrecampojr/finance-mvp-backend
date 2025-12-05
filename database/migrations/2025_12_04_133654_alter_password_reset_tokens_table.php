@@ -17,6 +17,7 @@ return new class extends Migration
 
         Schema::table('password_reset_tokens', function (Blueprint $table) {
             $table->id()->first();
+            $table->integer('user_id')->after('id');
             $table->string('email')->index()->change();
         });
     }
@@ -31,6 +32,9 @@ return new class extends Migration
                 $table->dropColumn('id');
             }
         });
+        if (Schema::hasColumn('password_reset_tokens', 'user_id')) {
+            $table->dropColumn('user_id');
+        }
 
         Schema::table('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->unique()->change();
