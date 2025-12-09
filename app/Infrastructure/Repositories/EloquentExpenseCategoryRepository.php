@@ -1,12 +1,12 @@
 <?php
 namespace App\Infrastructure\Repositories;
 use App\Models\ExpenseCategory;
-use App\Domain\Repositories\IPasswordResetTokenRepository;
+use App\Domain\Repositories\ExpenseCategoryRepository;
 use Carbon\Carbon;
 
-class EloquentPasswordResetTokenRepository implements IPasswordResetTokenRepository
+class EloquentExpenseCategoryRepository implements ExpenseCategoryRepository
 {
-    public function create(ExpenseCategory $data): ?ExpenseCategory
+    public function create(array $data): ?ExpenseCategory
     {
         return ExpenseCategory::create($data);
     }

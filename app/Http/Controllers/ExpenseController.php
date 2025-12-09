@@ -4,15 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\ExpenseCategoryRequest;
+use App\Domain\Repositories\ExpenseCategoryRepository;
+use App\Domain\Services\ExpenseCategoryService;
 
 class ExpenseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    private ExpenseCategoryService $expenseCategoryService;
+
+    public function __construct(
+        ExpenseCategoryService $expenseCategoryService
+    )
     {
-        //
+        $this->expenseCategoryService = $expenseCategoryService;
     }
 
     /**
@@ -22,30 +25,7 @@ class ExpenseController extends Controller
     public function createCategory(ExpenseCategoryRequest $request)
     {
         $data = $request->validated();
-        
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        $response = $this->expenseCategoryService->execute($data);
+        return $response;
     }
 }

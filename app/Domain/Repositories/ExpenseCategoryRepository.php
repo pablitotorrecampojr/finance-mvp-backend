@@ -4,5 +4,5 @@ use App\Models\ExpenseCategory;
 
 interface ExpenseCategoryRepository
 {
-    public function create(ExpenseCategory $data): ?ExpenseCategory;
+    public function create(array $data): ?ExpenseCategory;
 }

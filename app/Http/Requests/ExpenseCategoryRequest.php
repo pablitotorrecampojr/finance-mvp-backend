@@ -13,9 +13,9 @@ class ExpenseCategoryRequest extends FormRequest
     {
         return [
             'user_id' => 'required|integer',
-            'category' => 'required|string',
-            'limit' => 'required|double',
-            'limit_type' => 'required|string'
+            'category' => 'required|string|min:6',
+            'limit' => 'required|numeric',
+            'limit_type' => 'required|string|in:daily,weekly,monthly,yearly',
         ];
     }
 
