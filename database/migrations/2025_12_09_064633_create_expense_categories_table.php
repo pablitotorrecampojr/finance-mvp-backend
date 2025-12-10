@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('category');
-            $table->double('limit');
+            $table->decimal('limit', 10, 2); 
             $table->string('limit_type')->default('daily');
             $table->timestamps();
         });
