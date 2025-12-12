@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Domain\Enums\AccountStatus;
+use App\Models\ExpenseCategory;
 
 class User extends Authenticatable
 {
@@ -39,5 +40,11 @@ class User extends Authenticatable
     public function getNameAttribute(): string
     {
         return "{$this->first_name} {$this->last_name}";
+    }
+
+    //TODO: define relation with user and expense te
+    public function expenseCategories()
+    {
+        return $this->hasMany(ExpenseCategory::class);
     }
 }
