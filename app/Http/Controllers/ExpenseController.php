@@ -18,14 +18,25 @@ class ExpenseController extends Controller
         $this->expenseCategoryService = $expenseCategoryService;
     }
 
-    /**
-     * TODO: insert expense category
-     * Store a newly created exp in storage.
-     */
-    public function createCategory(ExpenseCategoryRequest $request)
+    public function store(ExpenseCategoryRequest $request, ExpenseCategoryRepository $repository)
     {
-        $data = $request->validated();
-        $response = $this->expenseCategoryService->execute($data);
-        return $response;
+        try {
+            $data = $request->validated();
+            $userId = $data['user_id'];
+            $categories = $data['categories'];
+        
+            $created = $repository->createMany($userId, $categories);
+            return response()->json([
+                'success' => true,
+                'message' => 'Categories stored successfully!',
+                'data'    => $created,
+            ]);
+        } catch (\Throwable $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to store categories',
+                'error'   => $e->getMessage(),
+            ], 500);
+        }
     }
 }

@@ -24,5 +24,5 @@ Route::controller(ExpenseController::class)
     ->prefix('expenses')
     ->middleware('auth:sanctum')
     ->group(function() {
-        Route::post('/add', 'createCategory');
+        Route::post('/store', 'store');
     });
