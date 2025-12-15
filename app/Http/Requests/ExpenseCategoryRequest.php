@@ -18,7 +18,7 @@ class ExpenseCategoryRequest extends FormRequest
             'categories.*.category' => [
                 'required',
                 'string',
-                'min:6',
+                'min:3',
                 Rule::unique('expense_categories', 'category')
                     ->where(fn ($query) => $query->where('user_id', $this->user_id)),
             ],
