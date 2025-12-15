@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ExpenseCategoryRequest;
 use App\Domain\Repositories\ExpenseCategoryRepository;
 use App\Domain\Services\ExpenseCategoryService;
+use App\Domain\Enums\ExpenseCategoryCodes;
 
 class ExpenseController extends Controller
 {
@@ -16,6 +17,33 @@ class ExpenseController extends Controller
     )
     {
         $this->expenseCategoryService = $expenseCategoryService;
+    }
+    
+    public function index(Request $request, ExpenseCategoryRepository $repository) 
+    {
+        try {
+            $data = $request->validate([
+                'user_id' => 'required|integer'
+            ]);
+
+            $userId = $data['user_id'];
+
+            $userCategories = $repository->getAll($userId);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Successfully retrieved expense categories',
+                'code'    => ExpenseCategoryCodes::SUCCESS,
+                'data'    => $userCategories
+            ]);
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Failed to get all categories',
+                'error'   => $th->getMessage(),
+            ], 500);
+        }
     }
 
     public function store(ExpenseCategoryRequest $request, ExpenseCategoryRepository $repository)
