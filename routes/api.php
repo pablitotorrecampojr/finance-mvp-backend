@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExpenseController;
 
 Route::get('/sanctum/csrf-cookie', \Laravel\Sanctum\Http\Controllers\CsrfCookieController::class . '@show');
 
@@ -18,3 +19,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/profile', [AuthController::class, 'profile']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });
+
+Route::controller(ExpenseController::class)
+    ->prefix('expenses')
+    ->middleware('auth:sanctum')
+    ->group(function() {
+        Route::post('/index', 'index');
+        Route::post('/store', 'store');
+    });
