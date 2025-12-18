@@ -15,6 +15,8 @@ class ExpenseCategoryRequest extends FormRequest
         return [
             'user_id' => 'required|integer',
             'categories' => 'required|array|min:1',
+            'categories.*.id' => 'required|integer',
+            'categories.*.user_id' => 'required|integer',
             'categories.*.category' => [
                 'required',
                 'string',
@@ -24,6 +26,8 @@ class ExpenseCategoryRequest extends FormRequest
             ],
             'categories.*.limit' => 'required|numeric',
             'categories.*.limit_type' => 'required|string|in:daily,weekly,monthly,yearly',
+            'categories.*.created_at' => 'nullable|date',
+            'categories.*.updated_at' => 'nullable|date',
         ];
     }
 

@@ -28,13 +28,13 @@ class ExpenseController extends Controller
 
             $userId = $data['user_id'];
 
-            $userCategories = $repository->getAll($userId);
+            $categories = $repository->getAll($userId);
 
             return response()->json([
                 'success' => true,
                 'message' => 'Successfully retrieved expense categories',
                 'code'    => ExpenseCategoryCodes::SUCCESS,
-                'data'    => $userCategories
+                'data'    => $categories
             ]);
 
         } catch (\Throwable $th) {
