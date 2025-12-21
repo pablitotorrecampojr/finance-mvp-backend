@@ -13,9 +13,9 @@ class ExpenseCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'id' => 'required|integer',
             'user_id' => 'required|integer',
             'categories' => 'required|array|min:1',
+            'categories.*id' => 'required|integer',
             'categories.*.category' => [
                 'required',
                 'string',
