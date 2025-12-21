@@ -13,21 +13,22 @@ class ExpenseCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'id' => 'required|integer',
             'user_id' => 'required|integer',
             'categories' => 'required|array|min:1',
-            'categories.*.id' => 'required|integer',
-            'categories.*.user_id' => 'required|integer',
             'categories.*.category' => [
                 'required',
                 'string',
                 'min:3',
-                Rule::unique('expense_categories', 'category')
-                    ->where(fn ($query) => $query->where('user_id', $this->user_id)),
+                Rule::when(
+                    fn ($input) => $input['flag'] === 'new',
+                    Rule::unique('expense_categories', 'category')
+                        ->where(fn ($query) => $query->where('user_id', $this->user_id))
+                )
             ],
             'categories.*.limit' => 'required|numeric',
             'categories.*.limit_type' => 'required|string|in:daily,weekly,monthly,yearly',
-            'categories.*.created_at' => 'nullable|date',
-            'categories.*.updated_at' => 'nullable|date',
+            'categories.*.flag' => 'required|string|in:new,updated,removed'
         ];
     }
 

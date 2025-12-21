@@ -20,14 +20,14 @@ class EloquentExpenseCategoryRepository implements ExpenseCategoryRepository
     public function createMany(int $userId, array $categories): array
     {
         $created = [];
-
+        \Log::info('categories' , ['categories' => $categories]);
         foreach ($categories as $categoryData) {
-            $created[] = ExpenseCategory::create([
-                'user_id'    => $userId,
-                'category'   => $categoryData['category'],
-                'limit'      => $categoryData['limit'],
-                'limit_type' => $categoryData['limit_type'],
-            ]);
+            // $created[] = ExpenseCategory::create([
+            //     'user_id'    => $userId,
+            //     'category'   => $categoryData['category'],
+            //     'limit'      => $categoryData['limit'],
+            //     'limit_type' => $categoryData['limit_type'],
+            // ]);
         }
 
         return $created;
