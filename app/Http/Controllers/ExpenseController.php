@@ -53,7 +53,7 @@ class ExpenseController extends Controller
             $categories = $data['categories'];
 
             $created = $repository->createMany($userId, $categories);
-            \Log::info('ExpenseController@store', ['created' => $created]);
+            
             return response()->json([
                 'success' => true,
                 'message' => 'Categories stored successfully!',
