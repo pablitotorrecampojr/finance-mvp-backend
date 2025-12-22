@@ -20,8 +20,8 @@ class EloquentExpenseCategoryRepository implements ExpenseCategoryRepository
 
     public function createMany(int $userId, array $categories): array
     {
-        \Log::info('EloquentExpenseCategoryRepository@createMany', ['categories' => $categories]);
         try {
+            //TODO: implement batch insert/update/delete
             $created = [];
             foreach ($categories as $categoryData) {
                 switch ($categoryData['flag']) {
@@ -52,6 +52,13 @@ class EloquentExpenseCategoryRepository implements ExpenseCategoryRepository
                     default:
                         $created[] = null;
                         break;
+                }
+            }
+
+            //TODO: return mapped resource
+            foreach ($created as $key => $item) {
+                if ($item !== null) {
+                    $created[$key] = new ExpenseCategoryResource($item);
                 }
             }
 

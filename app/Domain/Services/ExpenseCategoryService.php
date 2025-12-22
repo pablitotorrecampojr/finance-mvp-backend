@@ -8,7 +8,10 @@ use App\Models\ExpenseCategory;
 use App\Mail\ForgotPasswordMail;
 use Illuminate\Support\Facades\Mail;
 
-
+/**
+ * ?This is not used currently but kept for future reference.
+ * directly using eloquent class for this service.
+ */
 class ExpenseCategoryService
 {
     private ExpenseCategoryRepository $expenseCategoryRepository;
