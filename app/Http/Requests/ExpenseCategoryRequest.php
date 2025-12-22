@@ -15,7 +15,7 @@ class ExpenseCategoryRequest extends FormRequest
         return [
             'user_id' => 'required|integer',
             'categories' => 'required|array|min:1',
-            'categories.*id' => 'required|integer',
+            'categories.*.id' => 'required|integer',
             'categories.*.category' => [
                 'required',
                 'string',

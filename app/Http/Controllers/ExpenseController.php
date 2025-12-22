@@ -27,7 +27,6 @@ class ExpenseController extends Controller
             ]);
 
             $userId = $data['user_id'];
-
             $categories = $repository->getAll($userId);
 
             return response()->json([
@@ -52,14 +51,16 @@ class ExpenseController extends Controller
             $data = $request->validated();
             $userId = $data['user_id'];
             $categories = $data['categories'];
-        
+
             $created = $repository->createMany($userId, $categories);
             return response()->json([
                 'success' => true,
                 'message' => 'Categories stored successfully!',
                 'data'    => $created,
             ]);
+
         } catch (\Throwable $e) {
+            \Log::error('expense-controller@store', ['error' => $e->getMessage()]);
             return response()->json([
                 'success' => false,
                 'message' => 'Failed to store categories',
